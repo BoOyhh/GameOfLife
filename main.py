@@ -82,6 +82,20 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type ==pygame.MOUSEWHEEL:
+            if event.y > 0 :
+                cellSize += 2 
+            if event.y < 0 :
+                cellSize -= 2
+            cellSize = max(5, min(cellSize, 50))
+            rows = screenHeight // cellSize
+            cols = screenWidth // cellSize
+            new_grid = [[0 for _ in range(cols)] for _ in range(rows)]
+            for y in range(min(len(grid), rows)):
+                for x in range(min(len(grid[0]), cols)):
+                    new_grid[y][x] = grid[y][x]
+            grid = new_grid
+            
         if event.type == pygame.MOUSEBUTTONDOWN:
             if not runningSimulation:
                 start_button_rect = draw_start_button()
